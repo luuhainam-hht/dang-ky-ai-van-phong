@@ -76,6 +76,7 @@ h1 span{display:block;background:linear-gradient(90deg,var(--or3),var(--or) 45%,
 .count span{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px}
 
 section{padding:56px 0}
+section[id]{scroll-margin-top:70px}
 .eyebrow{color:var(--or2);font-weight:800;font-size:12px;letter-spacing:1.8px;text-transform:uppercase}
 h2{font-weight:900;font-size:clamp(28px,3.8vw,40px);line-height:1.15;letter-spacing:-.8px;margin:10px 0 10px}
 .sub{color:var(--muted);max-width:640px;margin-bottom:28px}
@@ -129,12 +130,35 @@ button.submit:disabled{opacity:.6;cursor:wait;transform:none}
 .done{display:none;text-align:center;padding:24px 0}
 .done .ok{width:84px;height:84px;margin:0 auto 18px;border-radius:50%;background:linear-gradient(135deg,var(--or2),var(--or3));display:flex;align-items:center;justify-content:center;font-size:42px;color:#fff;font-weight:900}
 .done p{color:var(--muted)}
+.card figure.hero-v{aspect-ratio:3/4;background:#000}
+.card figure.hero-v:after{display:none}
+.hero-v video{width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block}
+.vtag{position:absolute;left:14px;top:14px;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:30px;background:rgba(13,13,17,.72);backdrop-filter:blur(6px);font-weight:700;font-size:13px;color:#fff}
+.vtag i{width:8px;height:8px;border-radius:50%;background:#FF4D4D;animation:pulse 1.6s infinite}
+.vbig{position:absolute;right:12px;top:12px;z-index:2;width:42px;height:42px;border-radius:12px;border:0;cursor:pointer;background:rgba(13,13,17,.72);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center}
+.vbig svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.playbtn{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:2;width:84px;height:84px;border-radius:50%;border:0;cursor:pointer;background:rgba(13,13,17,.72);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 8px rgba(242,138,60,.25);transition:transform .15s}
+.playbtn:hover{transform:translate(-50%,-50%) scale(1.08)}
+.playbtn svg{width:34px;height:34px;margin-left:5px;fill:#fff}
+.card figure{cursor:pointer}
+.vsec .wrap{display:grid;grid-template-columns:1fr 360px;gap:48px;align-items:center}
+.phone{position:relative;width:360px;max-width:100%;margin:0 auto;padding:12px;border-radius:44px;background:#1C1C24;border:1px solid rgba(242,138,60,.4);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.phone video{display:block;width:100%;aspect-ratio:9/16;border-radius:34px;background:#000;object-fit:cover}
+.vlist{list-style:none;display:grid;gap:10px;color:#C9C9D4;margin-bottom:26px}
+.vlist li{padding-left:26px;position:relative}
+.vlist li:before{content:'▶';position:absolute;left:0;top:1px;color:var(--or);font-size:13px}
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(5,5,8,.88);backdrop-filter:blur(6px);padding:20px}
+.modal.open{display:flex}
+.modal video{height:min(86vh,calc((100vw - 40px) * 16 / 9));aspect-ratio:9/16;max-width:100%;border-radius:22px;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.modal .x{position:absolute;top:16px;right:16px;width:48px;height:48px;border-radius:50%;border:1px solid var(--line2);background:rgba(255,255,255,.08);color:#fff;font-size:26px;line-height:1;cursor:pointer}
 footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;border-top:1px solid var(--line)}
 
 @media (max-width:900px){
   .hero{padding:32px 0 30px}
   .hero .wrap{grid-template-columns:1fr;gap:34px}
-  .pains,.parts,.row,.opts.cols,.teacher{grid-template-columns:1fr}
+  .pains,.parts,.row,.opts.cols,.teacher,.vsec .wrap{grid-template-columns:1fr}
+  .vsec .wrap{gap:28px}
+  .playbtn{width:70px;height:70px}
   .formcard{padding:24px 18px;border-radius:20px}
   .lead{font-size:16px}
   section{padding:40px 0}
@@ -174,9 +198,10 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
     </div>
 
     <aside class="card" id="lich">
-      <figure>
-        <img src="giang-vien.jpg" alt="Giảng viên Lưu Hải Nam đứng lớp về ứng dụng AI" width="1212" height="844">
-        <figcaption><small>Giảng viên</small>Lưu Hải Nam</figcaption>
+      <figure class="hero-v" aria-label="Video giới thiệu khóa học">
+        <video class="hv" src="video-hero.mp4" poster="giang-vien.jpg" autoplay muted loop playsinline preload="auto"></video>
+        <span class="vtag"><i></i>Video 60 giây</span>
+        <button class="vbig" type="button" aria-label="Xem video lớn"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
       </figure>
       <div class="sched">
         <h3>Lịch khai giảng</h3>
@@ -249,7 +274,6 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
         <h2 style="margin-top:6px">Lưu Hải Nam</h2>
         <p class="role">Giảng viên Công nghệ thông tin – Trường Cao đẳng Công nghệ cao Hà Nội</p>
         <ul>
-          <li>Trưởng bộ môn Công nghệ phần mềm</li>
           <li>Trực tiếp giảng dạy chuyển đổi số và ứng dụng AI cho người đi làm</li>
           <li>Hoạt động giáo dục AI, chuyển đổi số từng được VTV đưa tin</li>
         </ul>
@@ -366,6 +390,8 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
 </section>
 </main>
 
+<div class="modal" id="vmodal" role="dialog" aria-label="Video giới thiệu"><button class="x" type="button" aria-label="Đóng">×</button><video id="mvideo" controls playsinline muted loop preload="none"></video></div>
+
 <footer><div class="wrap">AI Ứng Dụng Cho Khối Văn Phòng · Giảng viên Lưu Hải Nam</div></footer>
 
 <script src="config.js"></script>
@@ -382,6 +408,14 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
     if (d === 0) document.getElementById('count').style.display = 'none';
   }
   tick(); setInterval(tick, 1000);
+
+  // video giới thiệu: bấm ảnh giảng viên để mở video lớn
+  var modal = document.getElementById('vmodal'), mv = document.getElementById('mvideo'), hv = document.querySelector('.hv');
+  function openV() { if (!mv.src) mv.src = 'video-hero.mp4'; hv.pause(); mv.currentTime = hv.currentTime || 0; modal.classList.add('open'); document.body.style.overflow = 'hidden'; mv.play().catch(function () {}); }
+  function closeV() { mv.pause(); hv.play().catch(function () {}); modal.classList.remove('open'); document.body.style.overflow = ''; }
+  document.querySelector('.card figure').addEventListener('click', openV);
+  modal.addEventListener('click', function (e) { if (e.target === modal || e.target.classList.contains('x')) closeV(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeV(); });
 
   var f = document.getElementById('f'), btn = document.getElementById('btn'), msg = document.getElementById('msg');
   var sel = document.getElementById('chucVuSel'), khac = document.getElementById('chucVuKhac');
