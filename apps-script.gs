@@ -8,6 +8,8 @@
  * → Triển khai → Cấp quyền → copy "URL ứng dụng web" (kết thúc bằng /exec).
  */
 
+var SHEET_ID = '1hV8YCzfM245_lk5fsyCS2NX3sgrHbyCKzlA82sL0UlQ';
+
 var HEADERS = ['Thời gian đăng ký', 'Họ và tên', 'SĐT / Zalo', 'Email', 'Đơn vị công tác',
   'Chức vụ hiện tại', 'Mức độ dùng AI hiện tại', 'Mong muốn sau khóa học',
   'Mong muốn khác / ghi chú', 'Biết đến khóa học qua'];
@@ -20,7 +22,7 @@ function doPost(e) {
     if (p.website) return json_({ ok: true });            // bẫy chống spam
     if (!p.hoTen || !p.email || !p.sdt) return json_({ ok: false, error: 'Thiếu thông tin bắt buộc' });
 
-    var sh = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+    var sh = SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
     if (sh.getLastRow() === 0) sh.appendRow(HEADERS);
 
     sh.appendRow([
@@ -49,7 +51,7 @@ function doGet() {
 
 // Chạy 1 lần (tùy chọn) để định dạng hàng tiêu đề
 function dinhDangTieuDe() {
-  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  var sh = SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
   sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS])
     .setFontWeight('bold').setBackground('#0B1028').setFontColor('#FFFFFF').setWrap(true);
   sh.setFrozenRows(1);
@@ -65,4 +67,10 @@ function clean_(v, max) {
 
 function json_(o) {
   return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
+}
+
+// Chạy 1 lần: đặt múi giờ Việt Nam + định dạng tiêu đề
+function caiDatSheet() {
+  SpreadsheetApp.openById(SHEET_ID).setSpreadsheetTimeZone('Asia/Ho_Chi_Minh');
+  dinhDangTieuDe();
 }
