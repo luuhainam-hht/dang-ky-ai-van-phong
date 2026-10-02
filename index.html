@@ -137,6 +137,11 @@ button.submit:disabled{opacity:.6;cursor:wait;transform:none}
 .vtag i{width:8px;height:8px;border-radius:50%;background:#FF4D4D;animation:pulse 1.6s infinite}
 .vbig{position:absolute;right:12px;top:12px;z-index:2;width:42px;height:42px;border-radius:12px;border:0;cursor:pointer;background:rgba(13,13,17,.72);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center}
 .vbig svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.vsound{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:3;display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:40px;border:0;cursor:pointer;font:inherit;font-weight:800;font-size:15px;color:#fff;background:linear-gradient(135deg,var(--or2),var(--or3));box-shadow:0 0 0 0 rgba(242,138,60,.6);animation:sring 1.8s infinite;white-space:nowrap}
+.vsound svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.vsound.on{background:rgba(13,13,17,.72);backdrop-filter:blur(6px);animation:none;font-size:13px;padding:8px 14px}
+.vsound .w{display:none}.vsound.on .w{display:inline}.vsound.on .x{display:none}
+@keyframes sring{0%{box-shadow:0 0 0 0 rgba(242,138,60,.6)}70%{box-shadow:0 0 0 14px rgba(242,138,60,0)}100%{box-shadow:0 0 0 0 rgba(242,138,60,0)}}
 .playbtn{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:2;width:84px;height:84px;border-radius:50%;border:0;cursor:pointer;background:rgba(13,13,17,.72);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 8px rgba(242,138,60,.25);transition:transform .15s}
 .playbtn:hover{transform:translate(-50%,-50%) scale(1.08)}
 .playbtn svg{width:34px;height:34px;margin-left:5px;fill:#fff}
@@ -202,6 +207,7 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
         <video class="hv" src="video-hero.mp4" poster="giang-vien.jpg" autoplay muted loop playsinline preload="auto"></video>
         <span class="vtag"><i></i>Video 60 giây</span>
         <button class="vbig" type="button" aria-label="Xem video lớn"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+        <button class="vsound" type="button" aria-label="Bật tiếng video"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path class="w" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/><path class="x" d="m16 9 6 6M22 9l-6 6"/></svg><span>Bấm để bật tiếng</span></button>
       </figure>
       <div class="sched">
         <h3>Lịch khai giảng</h3>
@@ -390,7 +396,7 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
 </section>
 </main>
 
-<div class="modal" id="vmodal" role="dialog" aria-label="Video giới thiệu"><button class="x" type="button" aria-label="Đóng">×</button><video id="mvideo" controls playsinline muted loop preload="none"></video></div>
+<div class="modal" id="vmodal" role="dialog" aria-label="Video giới thiệu"><button class="x" type="button" aria-label="Đóng">×</button><video id="mvideo" controls playsinline loop preload="none"></video></div>
 
 <footer><div class="wrap">AI Ứng Dụng Cho Khối Văn Phòng · Giảng viên Lưu Hải Nam</div></footer>
 
@@ -414,6 +420,13 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
   function openV() { if (!mv.src) mv.src = 'video-hero.mp4'; hv.pause(); mv.currentTime = hv.currentTime || 0; modal.classList.add('open'); document.body.style.overflow = 'hidden'; mv.play().catch(function () {}); }
   function closeV() { mv.pause(); hv.play().catch(function () {}); modal.classList.remove('open'); document.body.style.overflow = ''; }
   document.querySelector('.card figure').addEventListener('click', openV);
+  var vs = document.querySelector('.vsound');
+  function setSound(on) { hv.muted = !on; vs.classList.toggle('on', on); vs.querySelector('span').textContent = on ? 'Tắt tiếng' : 'Bấm để bật tiếng'; vs.setAttribute('aria-label', on ? 'Tắt tiếng video' : 'Bật tiếng video'); }
+  vs.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (hv.muted) { if (!vs.dataset.used) { hv.currentTime = 0; vs.dataset.used = 1; } setSound(true); hv.volume = 1; hv.play().catch(function () {}); }
+    else setSound(false);
+  });
   modal.addEventListener('click', function (e) { if (e.target === modal || e.target.classList.contains('x')) closeV(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeV(); });
 
