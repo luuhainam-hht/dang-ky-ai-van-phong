@@ -94,6 +94,8 @@ h2{font-weight:900;font-size:clamp(28px,3.8vw,40px);line-height:1.15;letter-spac
 .part li:before{content:'';position:absolute;left:0;top:10px;width:7px;height:7px;border-radius:50%;background:var(--or)}
 .teacher{display:grid;grid-template-columns:1fr 1.1fr;gap:34px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:26px;padding:20px}
 .teacher img{width:100%;height:auto;border-radius:18px;display:block;aspect-ratio:1212/844;object-fit:cover}
+.teachers{display:grid;gap:22px;margin-top:26px}
+@media(min-width:901px){.teacher.rev{grid-template-columns:1.1fr 1fr}.teacher.rev>img{order:2}}
 .teacher .role{color:var(--or2);font-weight:700;margin-bottom:14px}
 .teacher ul{list-style:none;display:grid;gap:10px;color:#C9C9D4}
 .teacher li{padding-left:26px;position:relative}
@@ -356,7 +358,24 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
 
 <section>
   <div class="wrap">
+    <span class="eyebrow">Đội ngũ giảng viên</span>
+    <h2>Học trực tiếp cùng 2 giảng viên</h2>
+    <p class="sub">Những người đang trực tiếp đưa chuyển đổi số và AI tới cán bộ, người lao động.</p>
+    <div class="teachers">
     <div class="teacher">
+      <img src="giang-vien-chung.jpg" alt="TS. Kiều Thành Chung trình bày chuyên đề Chuyển đổi số" width="1212" height="844" loading="lazy">
+      <div>
+        <span class="eyebrow">Giảng viên</span>
+        <h2 style="margin-top:6px">TS. Kiều Thành Chung</h2>
+        <p class="role">Trưởng khoa Công nghệ thông tin – Trường Cao đẳng Công nghệ cao Hà Nội</p>
+        <ul>
+          <li>Báo cáo viên chuyên đề “Chuyển đổi số – Phong trào Bình dân học vụ số”</li>
+          <li>Trực tiếp giảng dạy chuyển đổi số và ứng dụng AI cho người đi làm</li>
+          <li>Hoạt động giáo dục AI, chuyển đổi số từng được VTV đưa tin</li>
+        </ul>
+      </div>
+    </div>
+    <div class="teacher rev">
       <img src="giang-vien.jpg" alt="Giảng viên Lưu Hải Nam trình bày về AI" width="1212" height="844" loading="lazy">
       <div>
         <span class="eyebrow">Giảng viên</span>
@@ -368,6 +387,7 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
         </ul>
         <blockquote>“Công nghệ sinh ra để phục vụ con người. Tôi không dạy để bạn biết – tôi hướng dẫn để bạn làm được.”</blockquote>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -531,7 +551,7 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
   </div>
 </div>
 
-<footer><div class="wrap">AI Ứng Dụng Cho Khối Văn Phòng · Giảng viên Lưu Hải Nam</div></footer>
+<footer><div class="wrap">AI Ứng Dụng Cho Khối Văn Phòng · Giảng viên TS. Kiều Thành Chung & Lưu Hải Nam</div></footer>
 
 <script src="config.js"></script>
 <script>
