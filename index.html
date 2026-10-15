@@ -566,7 +566,7 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
   var T = new Date('2026-10-22T19:45:00+07:00').getTime();
 
   // Giữ giá 0đ trong 15 phút kể từ lần đầu mở trang (lưu trên trình duyệt, tải lại không reset)
-  var HOLD = 15 * 60 * 1000, KEY = 'aivp_hold_start', start = 0;
+  var HOLD = 15 * 60 * 1000, KEY = 'aivp_hold_' + T, start = 0;
   try { start = +localStorage.getItem(KEY) || 0; if (!start) { start = Date.now(); localStorage.setItem(KEY, String(start)); } }
   catch (e) { start = Date.now(); }
   var holdEnd = Math.min(start + HOLD, T);
