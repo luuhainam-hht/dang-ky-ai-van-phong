@@ -132,6 +132,22 @@ button.submit:disabled{opacity:.6;cursor:wait;transform:none}
 .done{display:none;text-align:center;padding:24px 0}
 .done .ok{width:84px;height:84px;margin:0 auto 18px;border-radius:50%;background:linear-gradient(135deg,var(--or2),var(--or3));display:flex;align-items:center;justify-content:center;font-size:42px;color:#fff;font-weight:900}
 .done p{color:var(--muted)}
+.zbtn{display:inline-flex;align-items:center;justify-content:center;gap:10px;margin-top:18px;padding:15px 26px;border-radius:40px;background:linear-gradient(135deg,#1E88FF,#0068FF);color:#fff;font-weight:800;font-size:16px;text-decoration:none;box-shadow:0 10px 30px rgba(0,104,255,.4);transition:transform .15s}
+.zbtn:hover{transform:translateY(-2px)}
+.zbtn svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cg{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(5,5,9,.78);backdrop-filter:blur(6px)}
+.cg.on{display:flex}
+.cg canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.cgbox{position:relative;width:100%;max-width:440px;text-align:center;background:var(--bg2);border:1px solid rgba(242,138,60,.5);border-radius:26px;padding:34px 26px 26px;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}
+.cgbox .ok{width:84px;height:84px;margin:0 auto 16px;border-radius:50%;background:linear-gradient(135deg,var(--or2),var(--or3));display:flex;align-items:center;justify-content:center;font-size:42px;color:#fff;font-weight:900;box-shadow:0 0 0 10px rgba(242,138,60,.15)}
+.cgbox h2{font-size:28px;margin-bottom:8px}
+.cgbox p{color:var(--muted);font-size:15.5px}
+.cgbox p b{color:var(--text)}
+.cgbox .zbtn{width:100%;font-size:17px;padding:16px 20px}
+.cgnote{margin-top:12px;font-size:13.5px;color:var(--dim)}
+.cgnote b{color:var(--or2)}
+.cgstay{background:none;border:0;color:var(--muted);font:inherit;font-size:13.5px;text-decoration:underline;cursor:pointer;margin-left:4px}
 /* ===== Học phí ưu đãi ===== */
 .price{margin:0 0 26px;padding:18px 20px;border-radius:18px;border:1px solid rgba(242,138,60,.45);background:linear-gradient(135deg,rgba(242,138,60,.14),rgba(232,105,42,.05));max-width:540px}
 .price .prow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -534,12 +550,25 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
       <div class="done" id="done">
         <div class="ok">✓</div>
         <h2>Đăng ký thành công!</h2>
-        <p>Cảm ơn <b id="doneName"></b>. Hẹn gặp bạn lúc <b>19:45 tối Thứ Năm, 22/10</b>. Giảng viên sẽ liên hệ qua SĐT/Zalo hoặc email để xác nhận chỗ.</p>
+        <p>Cảm ơn <b id="doneName"></b>. Hẹn gặp bạn lúc <b>19:45 tối Thứ Năm, 22/10</b>. Vào nhóm Zalo lớp học để nhận link học và tài liệu.</p>
+        <a class="zbtn" data-zalo href="#" target="_self" rel="noopener"><svg viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M21 20v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>Vào nhóm Zalo lớp học</a>
       </div>
     </div>
   </div>
 </section>
 </main>
+
+<div class="cg" id="cg" role="dialog" aria-modal="true" aria-labelledby="cgTitle">
+  <canvas id="cgFx"></canvas>
+  <div class="cgbox">
+    <div class="ok">✓</div>
+    <h2 id="cgTitle">Chúc mừng <span id="cgName"></span>!</h2>
+    <p>Bạn đã giữ chỗ thành công buổi học <b>19:45 tối Thứ Năm, 22/10</b>.</p>
+    <p style="margin-top:6px">Bước cuối: vào <b>nhóm Zalo lớp học</b> để nhận link học và Sổ tay câu lệnh mẫu.</p>
+    <a class="zbtn" data-zalo href="#" target="_self" rel="noopener"><svg viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M21 20v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>Vào nhóm Zalo lớp học</a>
+    <div class="cgnote" id="cgNote">Tự động chuyển vào nhóm sau <b id="cgSec">6</b> giây<button class="cgstay" type="button" id="cgStay">Ở lại trang</button></div>
+  </div>
+</div>
 
 <div class="modal" id="vmodal" role="dialog" aria-label="Video giới thiệu"><button class="x" type="button" aria-label="Đóng">×</button><video id="mvideo" controls playsinline loop preload="none"></video></div>
 
@@ -688,6 +717,7 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
         document.getElementById('doneName').textContent = f.hoTen.value.trim();
         f.style.display = 'none'; document.getElementById('done').style.display = 'block';
         document.getElementById('dang-ky').scrollIntoView({ behavior: 'smooth' });
+        celebrate(f.hoTen.value.trim());
       })
       .catch(function (err) {
         msg.textContent = 'Gửi chưa được, bạn thử lại sau ít phút hoặc nhắn Zalo cho giảng viên. (' + err.message + ')';
@@ -695,6 +725,40 @@ footer{padding:28px 0 40px;text-align:center;color:var(--dim);font-size:14px;bor
       })
       .finally(function () { btn.disabled = false; btn.textContent = 'Gửi đăng ký'; });
   });
+
+  // Chúc mừng + chuyển vào nhóm Zalo
+  var ZALO = (window.APP_CONFIG || {}).ZALO_GROUP || 'https://zalo.me/g/jjzftgyrtqrv4gn4x8ul';
+  Array.prototype.forEach.call(document.querySelectorAll('[data-zalo]'), function (a) { a.href = ZALO; });
+  var cg = document.getElementById('cg'), cgTimer = null;
+  function stopAuto() { if (cgTimer) { clearInterval(cgTimer); cgTimer = null; } document.getElementById('cgNote').style.display = 'none'; }
+  document.getElementById('cgStay').addEventListener('click', function () { stopAuto(); cg.classList.remove('on'); });
+  cg.addEventListener('click', function (e) { if (e.target === cg) { stopAuto(); cg.classList.remove('on'); } });
+  function celebrate(name) {
+    var first = (name || '').split(/\s+/).pop();
+    document.getElementById('cgName').textContent = first;
+    cg.classList.add('on'); confetti();
+    var s = 6, sec = document.getElementById('cgSec'); sec.textContent = s;
+    cgTimer = setInterval(function () {
+      s--; sec.textContent = s;
+      if (s <= 0) { clearInterval(cgTimer); cgTimer = null; window.location.href = ZALO; }
+    }, 1000);
+  }
+  window.__celebrate = celebrate;
+  function confetti() {
+    var c = document.getElementById('cgFx'), x = c.getContext('2d'), W, H, dpr = Math.min(2, window.devicePixelRatio || 1);
+    function size() { W = c.clientWidth; H = c.clientHeight; c.width = W * dpr; c.height = H * dpr; x.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    size(); window.addEventListener('resize', size);
+    var cols = ['#F28A3C', '#FFB300', '#F6B47A', '#FFFFFF', '#1E88FF', '#E8692A'], P = [];
+    for (var i = 0; i < 160; i++) P.push({ x: W / 2 + (Math.random() - .5) * 120, y: H * .35, vx: (Math.random() - .5) * 14, vy: -Math.random() * 14 - 4,
+      w: 6 + Math.random() * 6, h: 8 + Math.random() * 8, r: Math.random() * 6, vr: (Math.random() - .5) * .3, c: cols[i % cols.length] });
+    var t0 = performance.now();
+    (function frame(t) {
+      x.clearRect(0, 0, W, H);
+      P.forEach(function (p) { p.vy += .32; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+        x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c; x.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); x.restore(); });
+      if (t - t0 < 4500) requestAnimationFrame(frame); else x.clearRect(0, 0, W, H);
+    })(t0);
+  }
 })();
 </script>
 </body>
